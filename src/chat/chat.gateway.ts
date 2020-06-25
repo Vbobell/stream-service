@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import {
   MessageBody,
   SubscribeMessage,
@@ -8,7 +9,10 @@ import {
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Server } from 'socket.io';
+import { Auth } from '../guards/auth.guard';
+import { Message } from './entity/chat.entity';
 
+@UseGuards(Auth)
 @WebSocketGateway()
 export class ChatGateway {
   messages: string[] = [];
@@ -16,8 +20,8 @@ export class ChatGateway {
   server: Server;
 
   @SubscribeMessage('send-message')
-  sendMessage(@MessageBody() data: string): Observable<WsResponse<string[]>> {
-    this.messages.push(data);
+  sendMessage(@MessageBody() data: Message): Observable<WsResponse<string[]>> {
+    this.messages.push(data.message);
     this.server.emit('send-message', { data: this.messages });
 
     return from(this.messages).pipe(
