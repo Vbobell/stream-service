@@ -18,6 +18,7 @@ export class ChatGateway {
   @SubscribeMessage('send-message')
   sendMessage(@MessageBody() data: string): Observable<WsResponse<string[]>> {
     this.messages.push(data);
+    this.server.emit('send-message', { data: this.messages });
 
     return from(this.messages).pipe(
       map(() => ({ event: 'send-message', data: this.messages })),
