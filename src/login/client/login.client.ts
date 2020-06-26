@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as MOCK_USER from '../users.json';
+import * as MOCK_USER from '../../users.json';
 import { User } from './login';
 import { Observable, from } from 'rxjs';
 
@@ -17,7 +17,7 @@ export class LoginClient {
     );
 
     if (user) {
-      return new Promise(resolve => resolve(user.email + user.password));
+      return new Promise(resolve => resolve(`${user.email}&${user.password}`));
     }
 
     return new Promise(resolve => resolve(''));
