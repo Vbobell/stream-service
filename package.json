@@ -27,6 +27,7 @@
     "@nestjs/platform-socket.io": "^7.2.0",
     "@nestjs/swagger": "^4.5.11",
     "@nestjs/websockets": "^7.2.0",
+    "helmet": "^3.23.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
