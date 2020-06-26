@@ -9,10 +9,10 @@ import {
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Server } from 'socket.io';
-import { Auth } from '../guards/auth.guard';
+import { AuthWs } from '../guards/auth-ws.guard';
 import { Message } from './entity/chat.entity';
 
-@UseGuards(Auth)
+@UseGuards(AuthWs)
 @WebSocketGateway()
 export class ChatGateway {
   messages: string[] = [];
