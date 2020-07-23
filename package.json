@@ -48,7 +48,9 @@
     "eslint": "7.1.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
+    "husky": "^4.2.5",
     "jest": "26.0.1",
+    "lint-staged": "^10.2.11",
     "prettier": "^1.19.1",
     "supertest": "^4.0.2",
     "ts-jest": "26.1.0",
@@ -70,5 +72,17 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "cross-env CI=1 npm run test && npm run test:e2e"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "npm run format",
+      "npm run lint"
+    ]
   }
 }

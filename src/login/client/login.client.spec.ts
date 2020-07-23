@@ -1,23 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoginClient } from './client/login.client';
-import { LoginService } from './login.service';
-import { LoginController } from './login.controller';
-import { User } from './dto/login.dto';
+import { LoginClient } from './login.client';
+import { User } from './login';
 
-describe('Login Controller', () => {
-  let controller: LoginController;
+describe('Login Client', () => {
+  let loginClient: LoginClient;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [LoginClient, LoginService],
-      controllers: [LoginController],
+      providers: [LoginClient],
     }).compile();
 
-    controller = module.get<LoginController>(LoginController);
+    loginClient = module.get<LoginClient>(LoginClient);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(loginClient).toBeDefined();
   });
 
   test('check client valid login', done => {
@@ -26,7 +23,7 @@ describe('Login Controller', () => {
       password: '123456',
     };
 
-    controller.login(user).subscribe(text => {
+    loginClient.login(user).subscribe(text => {
       expect(text).toEqual('jhon@jhon.com&123456');
       done();
     });
@@ -35,7 +32,7 @@ describe('Login Controller', () => {
   test('check client not valid login', done => {
     const user: User = { email: 'jhon@jhon', password: '123' };
 
-    controller.login(user).subscribe(text => {
+    loginClient.login(user).subscribe(text => {
       expect(text).toEqual('');
       done();
     });
