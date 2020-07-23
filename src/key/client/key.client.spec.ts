@@ -1,31 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { KeyClient } from './client/key.client';
-import { KeyService } from './key.service';
+import { KeyClient } from './key.client';
 
-describe('KeyService', () => {
-  let service: KeyService;
+describe('Key client', () => {
+  let keyClient: KeyClient;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [KeyClient, KeyService],
+      providers: [KeyClient],
     }).compile();
 
-    service = module.get<KeyService>(KeyService);
+    keyClient = module.get<KeyClient>(KeyClient);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(keyClient).toBeDefined();
   });
 
   test('check client valid key', done => {
-    service.validToken('jhon@jhon.com&123456').subscribe(valid => {
+    keyClient.checkToken('jhon@jhon.com&123456').subscribe(valid => {
       expect(valid).toEqual(true);
       done();
     });
   });
 
   test('check client not valid key', done => {
-    service.validToken('jhon@jhon&123').subscribe(valid => {
+    keyClient.checkToken('jhon@jhon&123').subscribe(valid => {
       expect(valid).toEqual(false);
       done();
     });
